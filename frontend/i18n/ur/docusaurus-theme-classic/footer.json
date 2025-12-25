@@ -1,0 +1,46 @@
+{
+  "title.Course": {
+    "message": "کورس",
+    "description": "Footer title Course"
+  },
+  "title.Advanced": {
+    "message": "ایڈوانسڈ",
+    "description": "Footer title Advanced"
+  },
+  "title.Community": {
+    "message": "کمیونٹی",
+    "description": "Footer title Community"
+  },
+  "link.item.label.Introduction": {
+    "message": "تعارف",
+    "description": "Footer link Introduction"
+  },
+  "link.item.label.Module 1: ROS 2": {
+    "message": "ماڈیول 1: ROS 2",
+    "description": "Footer link Module 1"
+  },
+  "link.item.label.Module 2: Simulation": {
+    "message": "ماڈیول 2: سمولیشن",
+    "description": "Footer link Module 2"
+  },
+  "link.item.label.Module 3: NVIDIA Isaac": {
+    "message": "ماڈیول 3: NVIDIA Isaac",
+    "description": "Footer link Module 3"
+  },
+  "link.item.label.Module 4: VLA": {
+    "message": "ماڈیول 4: VLA",
+    "description": "Footer link Module 4"
+  },
+  "link.item.label.Capstone Project": {
+    "message": "کیپ اسٹون پراجیکٹ",
+    "description": "Footer link Capstone"
+  },
+  "link.item.label.GitHub": {
+    "message": "گٹ ہب",
+    "description": "Footer link GitHub"
+  },
+  "copyright": {
+    "message": "کاپی رائٹ © {year} فزیکل اے آئی ٹیکسٹ بک۔ Docusaurus کے ساتھ بنایا گیا۔",
+    "description": "Footer copyright"
+  }
+}

@@ -1,0 +1,280 @@
+/* Background assessment wizard styles */
+
+.wizard {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.progressBar {
+  height: 4px;
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--ifm-color-primary);
+  transition: width 0.3s ease;
+}
+
+.stepIndicator {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 2rem;
+}
+
+.error {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: var(--ifm-color-danger-lightest, #fee2e2);
+  color: var(--ifm-color-danger-dark, #991b1b);
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.stepContent {
+  min-height: 300px;
+}
+
+/* Skill selector */
+.skillSelector {
+  margin-bottom: 2rem;
+}
+
+.skillLabel {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--ifm-heading-color);
+}
+
+.optionGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.optionCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5rem;
+  background: var(--ifm-background-surface-color);
+  border: 2px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.optionCard:hover {
+  border-color: var(--ifm-color-primary-light);
+  background: var(--ifm-color-primary-lightest, rgba(59, 130, 246, 0.05));
+}
+
+.optionSelected {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest, rgba(59, 130, 246, 0.1));
+}
+
+.optionLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+  margin-bottom: 0.25rem;
+}
+
+.optionDescription {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* Goals selector */
+.goalsSelector {
+  margin-bottom: 2rem;
+}
+
+.goalsHint {
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.goalsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.goalCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background: var(--ifm-background-surface-color);
+  border: 2px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.goalCard:hover {
+  border-color: var(--ifm-color-primary-light);
+  background: var(--ifm-color-primary-lightest, rgba(59, 130, 246, 0.05));
+}
+
+.goalSelected {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest, rgba(59, 130, 246, 0.1));
+}
+
+.goalIcon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.goalLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+  margin-bottom: 0.25rem;
+}
+
+.goalDescription {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.checkmark {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.backButton,
+.nextButton {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backButton {
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  color: var(--ifm-font-color-base);
+}
+
+.backButton:hover:not(:disabled) {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.backButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nextButton {
+  background: var(--ifm-color-primary);
+  border: none;
+  color: #fff;
+  flex: 1;
+  max-width: 200px;
+}
+
+.nextButton:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark);
+}
+
+.nextButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Complete step */
+.completeStep {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.completeIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.completeTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+}
+
+.completeText {
+  margin: 0 0 2rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.startButton {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: var(--ifm-color-primary);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.startButton:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+/* Dark mode */
+[data-theme='dark'] .optionCard,
+[data-theme='dark'] .goalCard {
+  background: var(--ifm-background-surface-color);
+}

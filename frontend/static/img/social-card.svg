@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1d4ed8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1100" cy="100" r="200" fill="rgba(255,255,255,0.03)"/>
+  <circle cx="100" cy="530" r="150" fill="rgba(255,255,255,0.03)"/>
+
+  <!-- Robot icon (left side) -->
+  <g transform="translate(100, 165)">
+    <!-- Robot head -->
+    <rect x="0" y="40" width="120" height="90" rx="15" fill="rgba(255,255,255,0.95)"/>
+    <!-- Eyes -->
+    <circle cx="35" cy="75" r="15" fill="url(#bgGradient)"/>
+    <circle cx="85" cy="75" r="15" fill="url(#bgGradient)"/>
+    <circle cx="35" cy="75" r="6" fill="white"/>
+    <circle cx="85" cy="75" r="6" fill="white"/>
+    <!-- Antenna -->
+    <rect x="52" y="10" width="16" height="35" rx="8" fill="rgba(255,255,255,0.9)"/>
+    <circle cx="60" cy="8" r="12" fill="url(#accentGrad)"/>
+    <!-- Body -->
+    <rect x="-15" y="140" width="150" height="110" rx="10" fill="rgba(255,255,255,0.9)"/>
+    <!-- Chest lights -->
+    <rect x="10" y="160" width="35" height="12" rx="6" fill="url(#accentGrad)"/>
+    <rect x="75" y="160" width="35" height="12" rx="6" fill="url(#accentGrad)"/>
+    <!-- AI text -->
+    <text x="60" y="220" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="url(#bgGradient)" text-anchor="middle">AI</text>
+    <!-- Arms -->
+    <rect x="-40" y="150" width="20" height="70" rx="10" fill="rgba(255,255,255,0.85)"/>
+    <rect x="140" y="150" width="20" height="70" rx="10" fill="rgba(255,255,255,0.85)"/>
+  </g>
+
+  <!-- Main Title -->
+  <text x="350" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="800" fill="white">
+    Physical AI &amp;
+  </text>
+  <text x="350" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="800" fill="white">
+    Humanoid Robotics
+  </text>
+
+  <!-- Tagline -->
+  <text x="350" y="410" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="rgba(255,255,255,0.8)">
+    Learn to build intelligent robots with ROS 2, Gazebo,
+  </text>
+  <text x="350" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="rgba(255,255,255,0.8)">
+    NVIDIA Isaac, and LLMs
+  </text>
+
+  <!-- Tech badges -->
+  <g transform="translate(350, 490)">
+    <rect x="0" y="0" width="90" height="36" rx="18" fill="rgba(255,255,255,0.15)"/>
+    <text x="45" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">ROS 2</text>
+
+    <rect x="100" y="0" width="100" height="36" rx="18" fill="rgba(255,255,255,0.15)"/>
+    <text x="150" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Gazebo</text>
+
+    <rect x="210" y="0" width="130" height="36" rx="18" fill="rgba(255,255,255,0.15)"/>
+    <text x="275" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">NVIDIA Isaac</text>
+
+    <rect x="350" y="0" width="70" height="36" rx="18" fill="rgba(255,255,255,0.15)"/>
+    <text x="385" y="24" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">LLMs</text>
+  </g>
+
+  <!-- Open Source badge -->
+  <g transform="translate(350, 550)">
+    <rect x="0" y="0" width="180" height="40" rx="20" fill="url(#accentGrad)"/>
+    <text x="90" y="27" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">Open Source Textbook</text>
+  </g>
+</svg>

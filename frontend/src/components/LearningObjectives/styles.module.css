@@ -1,0 +1,59 @@
+.learningObjectives {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--ifm-color-primary-lightest) 0%, var(--ifm-background-surface-color) 100%);
+  border-left: 4px solid var(--ifm-color-primary);
+  border-radius: 0 var(--ifm-global-radius) var(--ifm-global-radius) 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.icon {
+  color: var(--ifm-color-primary);
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary-darkest);
+}
+
+.objectivesList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.objective {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-content);
+  line-height: 1.5;
+}
+
+.objective:last-child {
+  margin-bottom: 0;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+  color: var(--ifm-color-success);
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .learningObjectives {
+  background: linear-gradient(135deg, var(--ifm-color-primary-darkest) 0%, var(--ifm-background-surface-color) 100%);
+}
+
+[data-theme='dark'] .title {
+  color: var(--ifm-color-primary-lighter);
+}

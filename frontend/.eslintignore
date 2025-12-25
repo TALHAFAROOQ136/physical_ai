@@ -1,0 +1,16 @@
+# Build outputs
+build/
+.docusaurus/
+.cache-loader/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.min.js
+
+# Coverage
+coverage/
+
+# Static assets
+static/

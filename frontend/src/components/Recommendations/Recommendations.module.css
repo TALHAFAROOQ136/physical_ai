@@ -1,0 +1,306 @@
+/* Recommendations component styles */
+
+/* Skip Banner */
+.skipBanner {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--ifm-color-warning-lightest, rgba(250, 204, 21, 0.1));
+  border: 1px solid var(--ifm-color-warning);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.skipBannerIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.skipBannerContent {
+  flex: 1;
+}
+
+.skipBannerTitle {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--ifm-font-color-base);
+}
+
+.skipBannerReason {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 0.75rem;
+}
+
+.skipBannerActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.skipButton {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: var(--ifm-color-warning-dark);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.skipButton:hover {
+  background: var(--ifm-color-warning-darker);
+}
+
+.continueButton {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.continueButton:hover {
+  border-color: var(--ifm-color-emphasis-500);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.dismissButton {
+  margin-left: auto;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--ifm-color-emphasis-500);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.dismissButton:hover {
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* Next Chapter - Card variant */
+.nextChapterCard {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s;
+}
+
+.nextChapterCard:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nextChapterHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.nextChapterIcon {
+  font-size: 1.25rem;
+}
+
+.nextChapterLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.nextChapterBody {
+  margin-bottom: 0.75rem;
+}
+
+.nextChapterTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.nextChapterTitle a {
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.nextChapterTitle a:hover {
+  color: var(--ifm-color-primary);
+}
+
+.nextChapterReason {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0;
+}
+
+.nextChapterFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nextChapterButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: var(--ifm-color-primary);
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nextChapterButton:hover {
+  background: var(--ifm-color-primary-dark);
+  color: white;
+  text-decoration: none;
+}
+
+/* Next Chapter - Inline variant */
+.nextChapterInline {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.nextLabel {
+  color: var(--ifm-color-emphasis-600);
+}
+
+.nextChapterLink {
+  font-weight: 500;
+}
+
+/* Next Chapter - Compact variant */
+.nextChapterCompact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest, rgba(59, 130, 246, 0.1));
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nextChapterCompact:hover {
+  background: var(--ifm-color-primary-light);
+  color: white;
+  text-decoration: none;
+}
+
+.nextIcon {
+  font-size: 1rem;
+}
+
+.nextTitle {
+  font-weight: 500;
+}
+
+/* Focus Areas */
+.focusAreas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.focusAreaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+}
+
+.focusAreaItem.high {
+  border-left: 3px solid var(--ifm-color-danger);
+}
+
+.focusAreaItem.medium {
+  border-left: 3px solid var(--ifm-color-warning);
+}
+
+.focusAreaItem.low {
+  border-left: 3px solid var(--ifm-color-emphasis-300);
+}
+
+.focusAreaPriority {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+}
+
+.focusAreaPriority.high {
+  color: var(--ifm-color-danger-dark);
+  background: var(--ifm-color-danger-lightest, rgba(239, 68, 68, 0.1));
+}
+
+.focusAreaPriority.medium {
+  color: var(--ifm-color-warning-dark);
+  background: var(--ifm-color-warning-lightest, rgba(250, 204, 21, 0.1));
+}
+
+.focusAreaPriority.low {
+  color: var(--ifm-color-emphasis-600);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.focusAreaTitle {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Recommendation Section */
+.recommendationSection {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+}
+
+.recommendationSectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recommendationSectionIcon {
+  font-size: 1.25rem;
+}
+
+/* Dark mode */
+[data-theme='dark'] .skipBanner {
+  background: rgba(250, 204, 21, 0.1);
+}
+
+[data-theme='dark'] .nextChapterCard {
+  background: var(--ifm-background-surface-color);
+}
+
+[data-theme='dark'] .nextChapterCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

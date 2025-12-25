@@ -1,0 +1,250 @@
+openapi: 3.1.0
+info:
+  title: Physical AI Textbook - Authentication API
+  version: 1.0.0
+  description: Authentication endpoints powered by Better-Auth
+
+servers:
+  - url: https://api.physicalai-textbook.com/v1
+    description: Production
+  - url: http://localhost:8000/v1
+    description: Development
+
+paths:
+  /auth/signup:
+    post:
+      summary: Register a new user
+      operationId: signup
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid input (email format, weak password)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/signin:
+    post:
+      summary: Authenticate user
+      operationId: signin
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SigninRequest'
+      responses:
+        '200':
+          description: Authentication successful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: session=abc123; HttpOnly; Secure; SameSite=Strict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/signout:
+    post:
+      summary: Sign out current session
+      operationId: signout
+      tags: [Authentication]
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Signed out successfully
+        '401':
+          description: Not authenticated
+
+  /auth/signout-all:
+    post:
+      summary: Sign out from all devices
+      operationId: signoutAll
+      tags: [Authentication]
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: All sessions invalidated
+        '401':
+          description: Not authenticated
+
+  /auth/forgot-password:
+    post:
+      summary: Request password reset email
+      operationId: forgotPassword
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Reset email sent (if email exists)
+        '429':
+          description: Too many requests
+
+  /auth/reset-password:
+    post:
+      summary: Reset password with token
+      operationId: resetPassword
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, newPassword]
+              properties:
+                token:
+                  type: string
+                newPassword:
+                  type: string
+                  minLength: 8
+      responses:
+        '200':
+          description: Password reset successful
+        '400':
+          description: Invalid or expired token
+
+  /auth/session:
+    get:
+      summary: Get current session info
+      operationId: getSession
+      tags: [Authentication]
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Current session data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionInfo'
+        '401':
+          description: Not authenticated
+
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: session
+
+  schemas:
+    SignupRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 255
+          example: student@example.com
+        password:
+          type: string
+          minLength: 8
+          description: Min 8 chars, 1 number, 1 special character
+        displayName:
+          type: string
+          maxLength: 100
+
+    SigninRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        session:
+          type: object
+          properties:
+            id:
+              type: string
+            expiresAt:
+              type: string
+              format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+          nullable: true
+        emailVerified:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    SessionInfo:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        sessionId:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object

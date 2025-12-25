@@ -1,0 +1,366 @@
+openapi: 3.1.0
+info:
+  title: Physical AI Textbook - Progress API
+  version: 1.0.0
+  description: Chapter progress tracking and dashboard data
+
+servers:
+  - url: https://api.physicalai-textbook.com/v1
+    description: Production
+  - url: http://localhost:8000/v1
+    description: Development
+
+paths:
+  /progress:
+    get:
+      summary: Get all progress for current user
+      operationId: getAllProgress
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: moduleId
+          in: query
+          schema:
+            type: string
+          description: Filter by module ID
+      responses:
+        '200':
+          description: User's progress data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgressSummary'
+        '401':
+          description: Not authenticated
+
+  /progress/chapters/{chapterId}:
+    get:
+      summary: Get progress for specific chapter
+      operationId: getChapterProgress
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: ros2-nodes
+      responses:
+        '200':
+          description: Chapter progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterProgress'
+        '401':
+          description: Not authenticated
+        '404':
+          description: Chapter not found
+
+    patch:
+      summary: Update chapter progress
+      operationId: updateChapterProgress
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProgressRequest'
+      responses:
+        '200':
+          description: Progress updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterProgress'
+        '400':
+          description: Invalid input
+        '401':
+          description: Not authenticated
+        '404':
+          description: Chapter not found
+
+  /progress/chapters/{chapterId}/complete:
+    post:
+      summary: Mark chapter as complete
+      operationId: markChapterComplete
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chapter marked complete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterProgress'
+        '401':
+          description: Not authenticated
+        '404':
+          description: Chapter not found
+
+    delete:
+      summary: Unmark chapter completion
+      operationId: unmarkChapterComplete
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Completion unmarked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterProgress'
+        '401':
+          description: Not authenticated
+
+  /progress/dashboard:
+    get:
+      summary: Get progress dashboard data
+      operationId: getDashboard
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Dashboard statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '401':
+          description: Not authenticated
+
+  /progress/recommendations:
+    get:
+      summary: Get personalized content recommendations
+      operationId: getRecommendations
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Recommended chapters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recommendations'
+        '401':
+          description: Not authenticated
+
+  /progress/heartbeat:
+    post:
+      summary: Update reading activity (called periodically)
+      operationId: heartbeat
+      tags: [Progress]
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [chapterId]
+              properties:
+                chapterId:
+                  type: string
+                position:
+                  type: string
+                  description: Current scroll position/section
+                durationSeconds:
+                  type: integer
+                  description: Time since last heartbeat
+      responses:
+        '200':
+          description: Activity recorded
+        '401':
+          description: Not authenticated
+
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: session
+
+  schemas:
+    ProgressSummary:
+      type: object
+      properties:
+        totalChapters:
+          type: integer
+        completedChapters:
+          type: integer
+        inProgressChapters:
+          type: integer
+        totalReadingTimeMinutes:
+          type: integer
+        chapters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChapterProgress'
+
+    ChapterProgress:
+      type: object
+      properties:
+        chapterId:
+          type: string
+        moduleId:
+          type: string
+        status:
+          type: string
+          enum: [not_started, in_progress, completed]
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        readingTimeSeconds:
+          type: integer
+        lastPosition:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+
+    UpdateProgressRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [in_progress, completed]
+        lastPosition:
+          type: string
+          description: Section ID or scroll position
+        additionalReadingTime:
+          type: integer
+          description: Seconds to add to reading time
+
+    Dashboard:
+      type: object
+      properties:
+        overallProgress:
+          type: object
+          properties:
+            completed:
+              type: integer
+            inProgress:
+              type: integer
+            notStarted:
+              type: integer
+            totalChapters:
+              type: integer
+            percentComplete:
+              type: number
+              format: float
+        moduleProgress:
+          type: array
+          items:
+            type: object
+            properties:
+              moduleId:
+                type: string
+              moduleTitle:
+                type: string
+              completed:
+                type: integer
+              total:
+                type: integer
+              percentComplete:
+                type: number
+        recentActivity:
+          type: array
+          items:
+            type: object
+            properties:
+              chapterId:
+                type: string
+              chapterTitle:
+                type: string
+              action:
+                type: string
+                enum: [started, continued, completed]
+              timestamp:
+                type: string
+                format: date-time
+        totalReadingTimeMinutes:
+          type: integer
+        currentStreak:
+          type: integer
+          description: Days in a row with activity
+
+    Recommendations:
+      type: object
+      properties:
+        nextChapter:
+          type: object
+          nullable: true
+          properties:
+            chapterId:
+              type: string
+            title:
+              type: string
+            moduleId:
+              type: string
+            reason:
+              type: string
+              description: Why this is recommended
+        skipSuggestions:
+          type: array
+          description: Chapters user can skip based on background
+          items:
+            type: object
+            properties:
+              chapterId:
+                type: string
+              title:
+                type: string
+              reason:
+                type: string
+        focusAreas:
+          type: array
+          description: Areas to focus on based on goals
+          items:
+            type: object
+            properties:
+              moduleId:
+                type: string
+              moduleTitle:
+                type: string
+              priority:
+                type: string
+                enum: [high, medium, low]
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string

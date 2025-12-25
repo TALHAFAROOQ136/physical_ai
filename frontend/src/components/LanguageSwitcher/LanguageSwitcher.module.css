@@ -1,0 +1,72 @@
+/* Language switcher styles */
+
+.buttons {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.125rem;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.button {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.button.active {
+  color: var(--ifm-color-primary-darkest);
+  background: var(--ifm-background-surface-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.select {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+}
+
+.select:hover {
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px var(--ifm-color-primary-lightest);
+}
+
+/* RTL support */
+[dir='rtl'] .select {
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  background-position: left 0.5rem center;
+}
+
+/* Dark mode */
+[data-theme='dark'] .buttons {
+  background: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .button.active {
+  background: var(--ifm-background-surface-color);
+}

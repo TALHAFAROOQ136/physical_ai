@@ -1,0 +1,393 @@
+openapi: 3.1.0
+info:
+  title: Physical AI Textbook - Chatbot API
+  version: 1.0.0
+  description: RAG-powered chatbot for textbook Q&A
+
+servers:
+  - url: https://api.physicalai-textbook.com/v1
+    description: Production
+  - url: http://localhost:8000/v1
+    description: Development
+
+paths:
+  /chatbot/conversations:
+    post:
+      summary: Create a new conversation
+      operationId: createConversation
+      tags: [Chatbot]
+      security:
+        - sessionAuth: []
+        - {}  # Allow anonymous
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConversationRequest'
+      responses:
+        '201':
+          description: Conversation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+
+    get:
+      summary: List user's conversations
+      operationId: listConversations
+      tags: [Chatbot]
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+        - name: before
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Pagination cursor
+      responses:
+        '200':
+          description: List of conversations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ConversationSummary'
+                  hasMore:
+                    type: boolean
+        '401':
+          description: Not authenticated
+
+  /chatbot/conversations/{conversationId}:
+    get:
+      summary: Get conversation with messages
+      operationId: getConversation
+      tags: [Chatbot]
+      security:
+        - sessionAuth: []
+        - {}
+      parameters:
+        - name: conversationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Conversation with messages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationWithMessages'
+        '403':
+          description: Not authorized to access this conversation
+        '404':
+          description: Conversation not found
+
+    delete:
+      summary: Delete a conversation
+      operationId: deleteConversation
+      tags: [Chatbot]
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: conversationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Conversation deleted
+        '403':
+          description: Not authorized
+        '404':
+          description: Conversation not found
+
+  /chatbot/conversations/{conversationId}/messages:
+    post:
+      summary: Send a message and get AI response
+      operationId: sendMessage
+      tags: [Chatbot]
+      security:
+        - sessionAuth: []
+        - {}
+      parameters:
+        - name: conversationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+      responses:
+        '200':
+          description: AI response (streaming or complete)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+            text/event-stream:
+              schema:
+                type: string
+                description: Server-sent events for streaming response
+        '400':
+          description: Invalid message
+        '403':
+          description: Not authorized
+        '404':
+          description: Conversation not found
+        '429':
+          description: Rate limit exceeded
+
+  /chatbot/explain:
+    post:
+      summary: Explain selected text (one-shot, no conversation)
+      operationId: explainText
+      tags: [Chatbot]
+      security:
+        - sessionAuth: []
+        - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExplainRequest'
+      responses:
+        '200':
+          description: Explanation response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExplainResponse'
+            text/event-stream:
+              schema:
+                type: string
+        '400':
+          description: Invalid request
+        '429':
+          description: Rate limit exceeded
+
+  /chatbot/feedback:
+    post:
+      summary: Submit feedback on a message
+      operationId: submitFeedback
+      tags: [Chatbot]
+      security:
+        - sessionAuth: []
+        - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackRequest'
+      responses:
+        '201':
+          description: Feedback recorded
+        '400':
+          description: Invalid feedback
+        '404':
+          description: Message not found
+
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: session
+
+  schemas:
+    CreateConversationRequest:
+      type: object
+      properties:
+        chapterContext:
+          type: string
+          description: Chapter ID user is currently viewing
+        selectedText:
+          type: string
+          description: Text user selected (for "Explain this")
+
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+          nullable: true
+        chapterContext:
+          type: string
+          nullable: true
+        messageCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    ConversationSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        preview:
+          type: string
+          description: First ~100 chars of first message
+        chapterContext:
+          type: string
+          nullable: true
+        messageCount:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+
+    ConversationWithMessages:
+      type: object
+      properties:
+        conversation:
+          $ref: '#/components/schemas/Conversation'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citation'
+        createdAt:
+          type: string
+          format: date-time
+
+    Citation:
+      type: object
+      properties:
+        chapterId:
+          type: string
+        section:
+          type: string
+        title:
+          type: string
+        relevanceScore:
+          type: number
+          format: float
+
+    SendMessageRequest:
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+          maxLength: 2000
+          description: User's message
+        stream:
+          type: boolean
+          default: true
+          description: Whether to stream the response
+        language:
+          type: string
+          enum: [en, ur]
+          description: Preferred response language (overrides profile)
+
+    MessageResponse:
+      type: object
+      properties:
+        userMessage:
+          $ref: '#/components/schemas/Message'
+        assistantMessage:
+          $ref: '#/components/schemas/Message'
+
+    ExplainRequest:
+      type: object
+      required: [selectedText]
+      properties:
+        selectedText:
+          type: string
+          maxLength: 1000
+          description: Text to explain
+        chapterId:
+          type: string
+          description: Chapter context
+        stream:
+          type: boolean
+          default: true
+        language:
+          type: string
+          enum: [en, ur]
+
+    ExplainResponse:
+      type: object
+      properties:
+        explanation:
+          type: string
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citation'
+        relatedChapters:
+          type: array
+          items:
+            type: object
+            properties:
+              chapterId:
+                type: string
+              title:
+                type: string
+
+    FeedbackRequest:
+      type: object
+      required: [messageId, rating]
+      properties:
+        messageId:
+          type: string
+          format: uuid
+        rating:
+          type: string
+          enum: [helpful, not_helpful]
+        comment:
+          type: string
+          maxLength: 500
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string

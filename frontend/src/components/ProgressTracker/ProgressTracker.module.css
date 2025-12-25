@@ -1,0 +1,75 @@
+/* Progress tracker styles */
+
+.tracker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  margin-top: 2rem;
+}
+
+.completeButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--ifm-background-surface-color);
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.completeButton:hover:not(:disabled) {
+  border-color: var(--ifm-color-success);
+  background: var(--ifm-color-success-lightest, rgba(34, 197, 94, 0.1));
+}
+
+.completeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.completeButton.completed {
+  border-color: var(--ifm-color-success);
+  background: var(--ifm-color-success-lightest, rgba(34, 197, 94, 0.1));
+  color: var(--ifm-color-success-dark);
+}
+
+.checkIcon {
+  font-size: 1rem;
+  color: var(--ifm-color-success);
+}
+
+.circleIcon {
+  font-size: 1rem;
+  color: var(--ifm-color-emphasis-500);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-top-color: var(--ifm-color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.readingTime {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* Dark mode */
+[data-theme='dark'] .completeButton {
+  background: var(--ifm-background-surface-color);
+}

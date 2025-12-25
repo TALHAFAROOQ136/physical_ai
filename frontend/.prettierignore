@@ -1,0 +1,22 @@
+# Build outputs
+build/
+.docusaurus/
+.cache-loader/
+
+# Dependencies
+node_modules/
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Coverage
+coverage/
+
+# Generated files
+*.min.js
+*.min.css
+
+# Static assets that shouldn't be reformatted
+static/

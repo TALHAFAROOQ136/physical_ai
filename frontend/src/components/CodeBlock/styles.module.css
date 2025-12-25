@@ -1,0 +1,82 @@
+.codeBlockContainer {
+  margin: 1rem 0;
+  border-radius: var(--ifm-code-border-radius);
+  overflow: hidden;
+}
+
+.codeBlockTitle {
+  padding: 0.5rem 1rem;
+  background-color: var(--ifm-color-emphasis-200);
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-content);
+}
+
+.codeBlockWrapper {
+  position: relative;
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  background-color: var(--ifm-code-background);
+}
+
+.codeBlock code {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: var(--ifm-code-font-size);
+}
+
+.lineNumbers {
+  counter-reset: line;
+}
+
+.lineNumbers code {
+  counter-increment: line;
+}
+
+.lineNumbers code::before {
+  content: counter(line);
+  display: inline-block;
+  width: 2rem;
+  margin-right: 1rem;
+  color: var(--ifm-color-emphasis-500);
+  text-align: right;
+}
+
+.copyButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: var(--ifm-global-radius);
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-content);
+  cursor: pointer;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s, background-color 0.2s;
+}
+
+.codeBlockWrapper:hover .copyButton {
+  opacity: 1;
+}
+
+.copyButton:hover {
+  background-color: var(--ifm-color-emphasis-300);
+}
+
+.copyButton.copied {
+  background-color: var(--ifm-color-success);
+  color: white;
+}
+
+.copyText {
+  font-family: var(--ifm-font-family-base);
+}

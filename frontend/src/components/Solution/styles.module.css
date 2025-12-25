@@ -1,0 +1,57 @@
+.solution {
+  margin: 1.5rem 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  overflow: hidden;
+}
+
+.solution.expanded {
+  border-color: var(--ifm-color-primary);
+}
+
+.solutionToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background-color: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+  transition: background-color 0.2s;
+}
+
+.solutionToggle:hover {
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+.chevron {
+  transition: transform 0.2s;
+}
+
+.chevronExpanded {
+  transform: rotate(90deg);
+}
+
+.solutionContent {
+  padding: 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  background-color: var(--ifm-background-color);
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .solution {
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+[data-theme='dark'] .solutionToggle {
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .solutionToggle:hover {
+  background-color: var(--ifm-color-emphasis-300);
+}

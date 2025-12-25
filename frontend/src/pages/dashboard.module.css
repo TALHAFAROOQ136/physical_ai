@@ -1,0 +1,209 @@
+/* Dashboard page styles */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ifm-heading-color);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.error {
+  color: var(--ifm-color-danger);
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--ifm-background-surface-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.statValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  line-height: 1;
+}
+
+.statLabel {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* Main Content */
+.mainContent {
+  display: grid;
+  gap: 2rem;
+}
+
+/* Sections */
+.section {
+  background: var(--ifm-background-surface-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sectionTitle {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+}
+
+/* Overall Progress */
+.overallProgress {
+  padding: 1rem 0;
+}
+
+/* Module Grid */
+.moduleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.moduleCard {
+  padding: 1rem;
+  background: var(--ifm-background-color);
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.moduleTitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+}
+
+/* Recommendation */
+.recommendationCard {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--ifm-color-primary-lightest, rgba(59, 130, 246, 0.05));
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-primary-light);
+}
+
+.recommendationIcon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.recommendationContent {
+  flex: 1;
+}
+
+.recommendationTitle {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+}
+
+.recommendationReason {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.continueButton {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--ifm-color-primary);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.continueButton:hover {
+  background: var(--ifm-color-primary-dark);
+  color: #fff;
+}
+
+/* Activity List */
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--ifm-background-color);
+  border-radius: 6px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.activityIcon {
+  font-size: 1.25rem;
+}
+
+.activityText {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--ifm-font-color-base);
+}
+
+.activityText strong {
+  color: var(--ifm-heading-color);
+}
+
+.activityTime {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* Dark mode */
+[data-theme='dark'] .statCard,
+[data-theme='dark'] .section {
+  background: var(--ifm-background-surface-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .moduleCard,
+[data-theme='dark'] .activityItem {
+  background: var(--ifm-background-color);
+}

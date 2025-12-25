@@ -1,0 +1,233 @@
+/**
+ * Custom styles for Physical AI & Humanoid Robotics Textbook
+ */
+
+/* Primary color palette - inspired by robotics/tech */
+:root {
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1d4ed8;
+  --ifm-color-primary-darker: #1e40af;
+  --ifm-color-primary-darkest: #1e3a8a;
+  --ifm-color-primary-light: #3b82f6;
+  --ifm-color-primary-lighter: #60a5fa;
+  --ifm-color-primary-lightest: #dbeafe;
+
+  /* Additional semantic colors */
+  --ifm-color-success: #10b981;
+  --ifm-color-success-dark: #059669;
+  --ifm-color-success-darkest: #047857;
+  --ifm-color-success-lightest: #d1fae5;
+
+  --ifm-color-warning: #f59e0b;
+  --ifm-color-warning-dark: #d97706;
+  --ifm-color-warning-darkest: #b45309;
+  --ifm-color-warning-lightest: #fef3c7;
+
+  --ifm-color-info: #06b6d4;
+  --ifm-color-info-dark: #0891b2;
+  --ifm-color-info-darkest: #0e7490;
+  --ifm-color-info-lightest: #cffafe;
+
+  --ifm-color-danger: #ef4444;
+  --ifm-color-danger-dark: #dc2626;
+  --ifm-color-danger-darkest: #b91c1c;
+  --ifm-color-danger-lightest: #fee2e2;
+
+  /* Typography */
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', monospace;
+  --ifm-heading-font-family: 'Inter', var(--ifm-font-family-base);
+
+  /* Code block styling */
+  --ifm-code-font-size: 0.9rem;
+  --ifm-code-border-radius: 0.5rem;
+  --ifm-code-padding-vertical: 0.1rem;
+  --ifm-code-padding-horizontal: 0.3rem;
+
+  /* Spacing */
+  --ifm-spacing-horizontal: 1.5rem;
+  --ifm-global-radius: 0.5rem;
+
+  /* Navbar */
+  --ifm-navbar-height: 4rem;
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.95);
+  --ifm-navbar-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+  /* Sidebar */
+  --doc-sidebar-width: 280px;
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  --ifm-color-primary: #60a5fa;
+  --ifm-color-primary-dark: #3b82f6;
+  --ifm-color-primary-darker: #2563eb;
+  --ifm-color-primary-darkest: #1d4ed8;
+  --ifm-color-primary-light: #93c5fd;
+  --ifm-color-primary-lighter: #bfdbfe;
+  --ifm-color-primary-lightest: #1e3a5f;
+
+  --ifm-background-color: #0f172a;
+  --ifm-background-surface-color: #1e293b;
+  --ifm-navbar-background-color: rgba(15, 23, 42, 0.95);
+
+  --ifm-color-emphasis-100: #1e293b;
+  --ifm-color-emphasis-200: #334155;
+  --ifm-color-emphasis-300: #475569;
+  --ifm-color-emphasis-400: #64748b;
+}
+
+/* Navbar styling */
+.navbar {
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.navbar__title {
+  font-weight: 700;
+}
+
+.navbar__link {
+  font-weight: 500;
+}
+
+/* Sidebar styling */
+.menu__link {
+  border-radius: var(--ifm-global-radius);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.menu__link--active {
+  background-color: var(--ifm-color-primary-lightest);
+}
+
+[data-theme='dark'] .menu__link--active {
+  background-color: var(--ifm-color-primary-darkest);
+}
+
+/* Code blocks */
+.prism-code {
+  border-radius: var(--ifm-code-border-radius);
+}
+
+/* Inline code */
+code {
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: var(--ifm-global-radius);
+  padding: 0.1rem 0.3rem;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+th {
+  background-color: var(--ifm-color-emphasis-100);
+  font-weight: 600;
+}
+
+/* Admonitions */
+.admonition {
+  border-radius: var(--ifm-global-radius);
+  border-left-width: 4px;
+}
+
+/* Details/Summary */
+details {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: var(--ifm-global-radius);
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+/* Links */
+.markdown a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.markdown a:hover {
+  border-bottom-color: currentColor;
+}
+
+/* Headings */
+.markdown h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.markdown h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.markdown h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+/* RTL support for Urdu */
+html[dir='rtl'] {
+  --ifm-spacing-horizontal: 1.5rem;
+}
+
+html[dir='rtl'] .navbar__items {
+  flex-direction: row-reverse;
+}
+
+html[dir='rtl'] .sidebar_node {
+  direction: rtl;
+}
+
+/* Print styles */
+@media print {
+  .navbar, .footer, .pagination-nav {
+    display: none !important;
+  }
+
+  .markdown {
+    max-width: 100%;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary-darkest);
+}
+
+[data-theme='dark'] ::selection {
+  background-color: var(--ifm-color-primary-darkest);
+  color: var(--ifm-color-primary-lightest);
+}

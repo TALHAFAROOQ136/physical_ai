@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /b /s \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\.specify\")",
+      "Bash(if not exist \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\history\\\\prompts\\\\constitution\" mkdir \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\history\\\\prompts\\\\constitution\")",
+      "Bash(git -C \"E:/hackthon/hckathon I/class_project/physical_ai\" branch -a)",
+      "Bash(git fetch:*)",
+      "Bash(ls:*)",
+      "Bash(pwsh:*)",
+      "Bash(if not exist \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\backend\\\\alembic\\\\versions\" mkdir \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\backend\\\\alembic\\\\versions\")",
+      "Bash(if not exist \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\backend\\\\scripts\" mkdir \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\backend\\\\scripts\")",
+      "Bash(cd:*)",
+      "Bash(cat:*)",
+      "Bash(git -C \"E:/hackthon/hckathon I/class_project/physical_ai\" rev-parse:*)",
+      "Bash(if not exist \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\frontend\\\\i18n\\\\ur\\\\docusaurus-plugin-content-docs\\\\current\\\\intro\" mkdir \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\frontend\\\\i18n\\\\ur\\\\docusaurus-plugin-content-docs\\\\current\\\\intro\")",
+      "Bash(if not exist \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\frontend\\\\i18n\\\\ur\\\\docusaurus-plugin-content-docs\\\\current\\\\module-1-ros2\" mkdir \"E:\\\\hackthon\\\\hckathon I\\\\class_project\\\\physical_ai\\\\frontend\\\\i18n\\\\ur\\\\docusaurus-plugin-content-docs\\\\current\\\\module-1-ros2\")",
+      "Bash(npm install)",
+      "Bash(npm start)",
+      "Bash(powershell -Command:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)"
+    ]
+  }
+}
