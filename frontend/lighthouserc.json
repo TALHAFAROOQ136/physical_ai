@@ -3,9 +3,9 @@
     "collect": {
       "staticDistDir": "./build",
       "url": [
-        "http://localhost/",
-        "http://localhost/docs/intro",
-        "http://localhost/docs/module-1-ros2"
+        "http://localhost/physical_ai/",
+        "http://localhost/physical_ai/docs/intro",
+        "http://localhost/physical_ai/docs/module-1-ros2"
       ],
       "numberOfRuns": 3
     },
