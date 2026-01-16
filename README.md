@@ -2,6 +2,8 @@
 
 An AI-native educational platform for learning Physical AI and Humanoid Robotics. Karari
 
+<!-- Deployment fix: 2026-01-16 -->
+
 ## Features
 
 - **Interactive Textbook**: 4 modules covering ROS 2, Simulation, NVIDIA Isaac, and Vision-Language-Action
