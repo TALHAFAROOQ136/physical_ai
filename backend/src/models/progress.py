@@ -81,9 +81,7 @@ class Progress(Base, UUIDMixin, TimestampMixin):
     chapter: Mapped["Chapter"] = relationship("Chapter")
 
     # Constraints
-    __table_args__ = (
-        UniqueConstraint("user_id", "chapter_id", name="uq_progress_user_chapter"),
-    )
+    __table_args__ = (UniqueConstraint("user_id", "chapter_id", name="uq_progress_user_chapter"),)
 
     def __repr__(self) -> str:
         return f"<Progress(user_id={self.user_id!r}, chapter_id={self.chapter_id!r}, status={self.status!r})>"

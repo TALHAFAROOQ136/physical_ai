@@ -2,12 +2,12 @@
 
 import secrets
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from sqlalchemy import select, delete
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.lib.config import get_settings
@@ -286,7 +286,7 @@ class Session:
         self.expires_at = expires_at
         self.user_agent = user_agent
         self.ip_address = ip_address
-        self.created_at = created_at or datetime.now(timezone.utc)
+        self.created_at = created_at or datetime.now(UTC)
 
 
 async def create_session(
@@ -310,7 +310,7 @@ async def create_session(
     session = Session(
         id=generate_session_token(),
         user_id=user.id,
-        expires_at=datetime.now(timezone.utc) + timedelta(days=SESSION_DURATION_DAYS),
+        expires_at=datetime.now(UTC) + timedelta(days=SESSION_DURATION_DAYS),
         user_agent=user_agent,
         ip_address=ip_address,
     )
@@ -352,7 +352,7 @@ async def get_session(db: AsyncSession, session_id: str) -> tuple[Session, User]
         FROM sessions s
         WHERE s.id = :session_id AND s.expires_at > :now
         """,
-        {"session_id": session_id, "now": datetime.now(timezone.utc)},
+        {"session_id": session_id, "now": datetime.now(UTC)},
     )
     row = result.fetchone()
 
@@ -406,7 +406,7 @@ async def create_password_reset_token(db: AsyncSession, user: User) -> str:
         Password reset token
     """
     token = generate_reset_token()
-    expires_at = datetime.now(timezone.utc) + timedelta(hours=PASSWORD_RESET_DURATION_HOURS)
+    expires_at = datetime.now(UTC) + timedelta(hours=PASSWORD_RESET_DURATION_HOURS)
 
     await db.execute(
         """
@@ -417,7 +417,7 @@ async def create_password_reset_token(db: AsyncSession, user: User) -> str:
             "id": token,
             "user_id": user.id,
             "expires_at": expires_at,
-            "created_at": datetime.now(timezone.utc),
+            "created_at": datetime.now(UTC),
         },
     )
     await db.flush()
@@ -444,7 +444,7 @@ async def verify_password_reset_token(
         SELECT user_id FROM password_reset_tokens
         WHERE id = :token AND expires_at > :now
         """,
-        {"token": token, "now": datetime.now(timezone.utc)},
+        {"token": token, "now": datetime.now(UTC)},
     )
     row = result.fetchone()
 

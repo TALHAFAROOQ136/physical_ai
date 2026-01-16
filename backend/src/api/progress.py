@@ -1,18 +1,18 @@
 """Progress API endpoints for chapter tracking and dashboard."""
 
 from datetime import datetime
-from typing import Annotated, Any
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.api.auth import ErrorResponse, get_current_user
 from src.lib.database import get_db
 from src.models.chapter import Chapter
 from src.models.progress import ProgressStatus
 from src.services import progress_service
-from src.api.auth import get_current_user, ErrorResponse
 
 router = APIRouter()
 
@@ -179,25 +179,29 @@ async def get_all_progress(
     for chapter in all_chapters:
         progress = progress_map.get(chapter.id)
         if progress:
-            chapters.append(ChapterProgress(
-                chapter_id=chapter.id,
-                module_id=chapter.module_id,
-                status=progress.status,
-                completed_at=progress.completed_at,
-                reading_time_seconds=progress.reading_time_seconds,
-                last_position=progress.last_position,
-                updated_at=progress.updated_at,
-            ))
+            chapters.append(
+                ChapterProgress(
+                    chapter_id=chapter.id,
+                    module_id=chapter.module_id,
+                    status=progress.status,
+                    completed_at=progress.completed_at,
+                    reading_time_seconds=progress.reading_time_seconds,
+                    last_position=progress.last_position,
+                    updated_at=progress.updated_at,
+                )
+            )
         else:
-            chapters.append(ChapterProgress(
-                chapter_id=chapter.id,
-                module_id=chapter.module_id,
-                status=ProgressStatus.NOT_STARTED,
-                completed_at=None,
-                reading_time_seconds=0,
-                last_position=None,
-                updated_at=datetime.utcnow(),
-            ))
+            chapters.append(
+                ChapterProgress(
+                    chapter_id=chapter.id,
+                    module_id=chapter.module_id,
+                    status=ProgressStatus.NOT_STARTED,
+                    completed_at=None,
+                    reading_time_seconds=0,
+                    last_position=None,
+                    updated_at=datetime.utcnow(),
+                )
+            )
 
     return ProgressSummary(
         total_chapters=summary["total_chapters"],

@@ -10,7 +10,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.lib.database import get_db
 from src.services.chatbot_service import (
-    add_message,
     chat,
     chat_stream,
     create_conversation,
@@ -288,9 +287,7 @@ async def submit_feedback(
 
     from src.models.message import Message
 
-    result = await session.execute(
-        select(Message).where(Message.id == request.message_id)
-    )
+    result = await session.execute(select(Message).where(Message.id == request.message_id))
     message = result.scalar_one_or_none()
 
     if not message:

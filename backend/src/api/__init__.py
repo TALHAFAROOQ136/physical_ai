@@ -2,10 +2,10 @@
 
 from fastapi import APIRouter
 
-from src.api.chatbot import router as chatbot_router
 from src.api.auth import router as auth_router
-from src.api.users import router as users_router
+from src.api.chatbot import router as chatbot_router
 from src.api.progress import router as progress_router
+from src.api.users import router as users_router
 
 router = APIRouter()
 

@@ -1,7 +1,7 @@
 """Recommendation service for personalized content suggestions."""
 
-from typing import Any
 import uuid
+from typing import Any
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -103,9 +103,7 @@ async def get_recommendations(
 
     # Get all chapters ordered by module and sequence
     result = await db.execute(
-        select(Chapter)
-        .join(Module)
-        .order_by(Module.order_sequence, Chapter.order_sequence)
+        select(Chapter).join(Module).order_by(Module.order_sequence, Chapter.order_sequence)
     )
     all_chapters = list(result.scalars().all())
 
@@ -118,9 +116,7 @@ async def get_recommendations(
     for chapter in all_chapters:
         progress = progress_map.get(chapter.id)
         if not progress or progress.status != ProgressStatus.COMPLETED:
-            result = await db.execute(
-                select(Module).where(Module.id == chapter.module_id)
-            )
+            result = await db.execute(select(Module).where(Module.id == chapter.module_id))
             module = result.scalar_one_or_none()
             next_chapter = {
                 "chapter_id": chapter.id,
@@ -137,21 +133,25 @@ async def get_recommendations(
         for chapter in all_chapters:
             if "intro" in chapter.id.lower() or "basics" in chapter.id.lower():
                 if chapter.difficulty == "beginner":
-                    skip_suggestions.append({
-                        "chapter_id": chapter.id,
-                        "title": chapter.title,
-                        "reason": "Your advanced Python skills likely cover this content",
-                    })
+                    skip_suggestions.append(
+                        {
+                            "chapter_id": chapter.id,
+                            "title": chapter.title,
+                            "reason": "Your advanced Python skills likely cover this content",
+                        }
+                    )
 
     if ros_experience == "experienced":
         # Suggest skipping basic ROS chapters
         for chapter in all_chapters:
             if "ros2" in chapter.id.lower() and chapter.difficulty == "beginner":
-                skip_suggestions.append({
-                    "chapter_id": chapter.id,
-                    "title": chapter.title,
-                    "reason": "Your ROS experience likely covers this content",
-                })
+                skip_suggestions.append(
+                    {
+                        "chapter_id": chapter.id,
+                        "title": chapter.title,
+                        "reason": "Your ROS experience likely covers this content",
+                    }
+                )
 
     # Generate focus areas based on goals
     focus_areas = []
@@ -171,20 +171,24 @@ async def get_recommendations(
         if module_id and module_id in modules:
             module = modules[module_id]
             priority = "high" if goal in learning_goals[:2] else "medium"
-            focus_areas.append({
-                "module_id": module.id,
-                "module_title": module.title,
-                "priority": priority,
-            })
+            focus_areas.append(
+                {
+                    "module_id": module.id,
+                    "module_title": module.title,
+                    "priority": priority,
+                }
+            )
 
     # Add modules not in goals as low priority
     for module_id, module in modules.items():
         if module_id not in [fa["module_id"] for fa in focus_areas]:
-            focus_areas.append({
-                "module_id": module.id,
-                "module_title": module.title,
-                "priority": "low",
-            })
+            focus_areas.append(
+                {
+                    "module_id": module.id,
+                    "module_title": module.title,
+                    "priority": "low",
+                }
+            )
 
     return {
         "next_chapter": next_chapter,
@@ -207,14 +211,11 @@ async def get_personalized_path(
     Returns:
         Personalized learning path with suggested order and skips
     """
-    background = user.background or {}
     recommendations = await get_recommendations(db, user)
 
     # Get all chapters
     result = await db.execute(
-        select(Chapter)
-        .join(Module)
-        .order_by(Module.order_sequence, Chapter.order_sequence)
+        select(Chapter).join(Module).order_by(Module.order_sequence, Chapter.order_sequence)
     )
     all_chapters = list(result.scalars().all())
 
@@ -230,14 +231,16 @@ async def get_personalized_path(
         progress = progress_map.get(chapter.id)
         status = progress.status if progress else ProgressStatus.NOT_STARTED
 
-        path.append({
-            "chapter_id": chapter.id,
-            "title": chapter.title,
-            "module_id": chapter.module_id,
-            "status": status,
-            "suggested_skip": chapter.id in skip_ids,
-            "difficulty": chapter.difficulty,
-        })
+        path.append(
+            {
+                "chapter_id": chapter.id,
+                "title": chapter.title,
+                "module_id": chapter.module_id,
+                "status": status,
+                "suggested_skip": chapter.id in skip_ids,
+                "difficulty": chapter.difficulty,
+            }
+        )
 
     return {
         "path": path,

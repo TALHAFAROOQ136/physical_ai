@@ -53,6 +53,7 @@ class Settings(BaseSettings):
         # We can't access other fields directly in validators,
         # so we check the environment variable
         import os
+
         env = os.getenv("ENVIRONMENT", "development")
         if env == "production" and v == "development-secret-change-in-production":
             raise ValueError("Must set BETTER_AUTH_SECRET in production")

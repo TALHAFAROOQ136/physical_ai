@@ -12,8 +12,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.lib.qdrant import (
-    get_qdrant_client,
     TEXTBOOK_COLLECTION,
+    get_qdrant_client,
     search_similar,
 )
 from src.services.embedding_service import get_embedding
@@ -52,13 +52,15 @@ def get_sample_points(limit: int = 5) -> list[dict]:
         )
         points = []
         for point in results[0]:
-            points.append({
-                "id": point.id,
-                "module_id": point.payload.get("module_id"),
-                "chapter_id": point.payload.get("chapter_id"),
-                "title": point.payload.get("title"),
-                "text_preview": point.payload.get("text", "")[:100] + "...",
-            })
+            points.append(
+                {
+                    "id": point.id,
+                    "module_id": point.payload.get("module_id"),
+                    "chapter_id": point.payload.get("chapter_id"),
+                    "title": point.payload.get("title"),
+                    "text_preview": point.payload.get("text", "")[:100] + "...",
+                }
+            )
         return points
     except Exception as e:
         return [{"error": str(e)}]
@@ -112,13 +114,15 @@ async def test_search(query: str) -> list[dict]:
 
     search_results = []
     for i, result in enumerate(results, 1):
-        search_results.append({
-            "rank": i,
-            "score": round(result.score, 4),
-            "chapter_id": result.payload.get("chapter_id"),
-            "title": result.payload.get("title"),
-            "text_preview": result.payload.get("text", "")[:200] + "...",
-        })
+        search_results.append(
+            {
+                "rank": i,
+                "score": round(result.score, 4),
+                "chapter_id": result.payload.get("chapter_id"),
+                "title": result.payload.get("title"),
+                "text_preview": result.payload.get("text", "")[:200] + "...",
+            }
+        )
         print(f"\n{i}. Score: {result.score:.4f}")
         print(f"   Chapter: {result.payload.get('chapter_id')}")
         print(f"   Title: {result.payload.get('title')}")

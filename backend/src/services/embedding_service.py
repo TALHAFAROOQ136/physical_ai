@@ -1,7 +1,6 @@
 """Embedding service using OpenAI text-embedding-3-small."""
 
 import hashlib
-from functools import lru_cache
 
 from openai import AsyncOpenAI
 
@@ -116,11 +115,13 @@ def chunk_text(
 
         chunk_text = text[start:end].strip()
         if chunk_text:
-            chunks.append({
-                "text": chunk_text,
-                "start": start,
-                "end": end,
-            })
+            chunks.append(
+                {
+                    "text": chunk_text,
+                    "start": start,
+                    "end": end,
+                }
+            )
 
         # Move start with overlap
         start = end - overlap
@@ -150,7 +151,7 @@ async def compute_similarity(
     Returns:
         Similarity score between 0 and 1
     """
-    dot_product = sum(a * b for a, b in zip(query_embedding, document_embedding))
+    dot_product = sum(a * b for a, b in zip(query_embedding, document_embedding, strict=False))
     query_norm = sum(a * a for a in query_embedding) ** 0.5
     doc_norm = sum(b * b for b in document_embedding) ** 0.5
 

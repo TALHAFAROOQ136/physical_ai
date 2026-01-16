@@ -14,9 +14,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.lib.database import async_session_maker, engine
-from src.models.module import Module
 from src.models.chapter import Chapter
-
+from src.models.module import Module
 
 MODULES_DATA = [
     {
@@ -354,9 +353,7 @@ async def seed_modules(session: AsyncSession) -> None:
     """Seed modules into the database."""
     for module_data in MODULES_DATA:
         # Check if module exists
-        result = await session.execute(
-            select(Module).where(Module.id == module_data["id"])
-        )
+        result = await session.execute(select(Module).where(Module.id == module_data["id"]))
         existing = result.scalar_one_or_none()
 
         if existing:
@@ -374,9 +371,7 @@ async def seed_chapters(session: AsyncSession) -> None:
     """Seed chapters into the database."""
     for chapter_data in CHAPTERS_DATA:
         # Check if chapter exists
-        result = await session.execute(
-            select(Chapter).where(Chapter.id == chapter_data["id"])
-        )
+        result = await session.execute(select(Chapter).where(Chapter.id == chapter_data["id"]))
         existing = result.scalar_one_or_none()
 
         if existing:

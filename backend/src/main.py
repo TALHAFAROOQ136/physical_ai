@@ -1,17 +1,17 @@
 """FastAPI application entry point."""
 
 import asyncio
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
+from src.api import router as api_router
+from src.lib.cache import get_cache
 from src.lib.config import get_settings
 from src.lib.database import close_db
-from src.lib.cache import get_cache
-from src.api import router as api_router
 
 settings = get_settings()
 

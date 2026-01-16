@@ -10,19 +10,18 @@ import argparse
 import asyncio
 import sys
 from pathlib import Path
-from uuid import uuid4
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.lib.config import get_settings
 from src.lib.qdrant import (
-    upsert_chunks,
     delete_by_chapter,
+    upsert_chunks,
 )
 from src.services.embedding_service import (
-    get_embeddings_batch,
     generate_chunk_id,
+    get_embeddings_batch,
 )
 
 settings = get_settings()
@@ -330,22 +329,24 @@ async def index_troubleshooting(dry_run: bool = False) -> int:
 
         # Prepare points for Qdrant
         points = []
-        for i, (chunk, embedding) in enumerate(zip(content["chunks"], embeddings)):
+        for i, (chunk, embedding) in enumerate(zip(content["chunks"], embeddings, strict=False)):
             point_id = generate_chunk_id(chapter_id, i)
-            points.append({
-                "id": point_id,
-                "vector": embedding,
-                "payload": {
-                    "module_id": content["module_id"],
-                    "chapter_id": chapter_id,
-                    "title": f"{content['title']} - {chunk['title']}",
-                    "slug": chapter_id,
-                    "text": chunk["text"],
-                    "chunk_index": i,
-                    "difficulty": "advanced",
-                    "type": "troubleshooting",
-                },
-            })
+            points.append(
+                {
+                    "id": point_id,
+                    "vector": embedding,
+                    "payload": {
+                        "module_id": content["module_id"],
+                        "chapter_id": chapter_id,
+                        "title": f"{content['title']} - {chunk['title']}",
+                        "slug": chapter_id,
+                        "text": chunk["text"],
+                        "chunk_index": i,
+                        "difficulty": "advanced",
+                        "type": "troubleshooting",
+                    },
+                }
+            )
 
         # Upsert to Qdrant
         await upsert_chunks(points)
@@ -376,9 +377,7 @@ async def main(dry_run: bool = False):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Index capstone troubleshooting content"
-    )
+    parser = argparse.ArgumentParser(description="Index capstone troubleshooting content")
     parser.add_argument(
         "--dry-run",
         action="store_true",

@@ -1,10 +1,9 @@
 """Chatbot service with RAG (Retrieval-Augmented Generation)."""
 
 import uuid
-from typing import AsyncGenerator, Any
-from datetime import datetime
+from collections.abc import AsyncGenerator
+from typing import Any
 
-from openai import AsyncOpenAI
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -73,9 +72,7 @@ async def get_conversation(
     conversation_id: uuid.UUID,
 ) -> Conversation | None:
     """Get a conversation by ID."""
-    result = await session.execute(
-        select(Conversation).where(Conversation.id == conversation_id)
-    )
+    result = await session.execute(select(Conversation).where(Conversation.id == conversation_id))
     return result.scalar_one_or_none()
 
 
@@ -168,12 +165,14 @@ async def retrieve_context(
     for result in results:
         if result.score < 0.5:  # Filter low-relevance results
             continue
-        context_chunks.append({
-            "chapter_id": result.payload.get("chapter_id"),
-            "title": result.payload.get("title"),
-            "text": result.payload.get("text"),
-            "score": result.score,
-        })
+        context_chunks.append(
+            {
+                "chapter_id": result.payload.get("chapter_id"),
+                "title": result.payload.get("title"),
+                "text": result.payload.get("text"),
+                "score": result.score,
+            }
+        )
 
     return context_chunks
 
@@ -186,8 +185,7 @@ def format_context_for_prompt(chunks: list[dict[str, Any]]) -> str:
     context_parts = ["Here is relevant context from the textbook:\n"]
     for i, chunk in enumerate(chunks, 1):
         context_parts.append(
-            f"[Source {i}: {chunk['title']} ({chunk['chapter_id']})]\n"
-            f"{chunk['text']}\n"
+            f"[Source {i}: {chunk['title']} ({chunk['chapter_id']})]\n{chunk['text']}\n"
         )
 
     return "\n".join(context_parts)
@@ -229,17 +227,21 @@ async def generate_response(
     # Add retrieved context if available
     context_text = format_context_for_prompt(context_chunks)
     if context_text:
-        messages.append({
-            "role": "system",
-            "content": context_text,
-        })
+        messages.append(
+            {
+                "role": "system",
+                "content": context_text,
+            }
+        )
 
     # Add conversation history
     for msg in conversation_history[-MAX_CONTEXT_MESSAGES:]:
-        messages.append({
-            "role": msg.role,
-            "content": msg.content,
-        })
+        messages.append(
+            {
+                "role": msg.role,
+                "content": msg.content,
+            }
+        )
 
     # Add current query
     messages.append({"role": "user", "content": query})
@@ -279,17 +281,21 @@ async def generate_response_stream(
     # Add retrieved context if available
     context_text = format_context_for_prompt(context_chunks)
     if context_text:
-        messages.append({
-            "role": "system",
-            "content": context_text,
-        })
+        messages.append(
+            {
+                "role": "system",
+                "content": context_text,
+            }
+        )
 
     # Add conversation history
     for msg in conversation_history[-MAX_CONTEXT_MESSAGES:]:
-        messages.append({
-            "role": msg.role,
-            "content": msg.content,
-        })
+        messages.append(
+            {
+                "role": msg.role,
+                "content": msg.content,
+            }
+        )
 
     # Add current query
     messages.append({"role": "user", "content": query})
@@ -434,7 +440,7 @@ async def explain_text(
         {"role": "system", "content": context_text} if context_text else None,
         {
             "role": "user",
-            "content": f"Please explain this text from the textbook in simple terms:\n\n\"{selected_text}\"\n\nProvide a clear, concise explanation that helps a student understand this concept.",
+            "content": f'Please explain this text from the textbook in simple terms:\n\n"{selected_text}"\n\nProvide a clear, concise explanation that helps a student understand this concept.',
         },
     ]
     messages = [m for m in messages if m]  # Remove None
@@ -450,4 +456,3 @@ async def explain_text(
     citations = format_citations(context_chunks)
 
     return explanation, citations
-

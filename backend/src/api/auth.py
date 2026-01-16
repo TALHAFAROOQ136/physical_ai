@@ -162,12 +162,12 @@ async def signup(
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail={"code": e.code, "message": e.message},
-        )
+        ) from e
     except auth_service.WeakPasswordError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"code": e.code, "message": e.message},
-        )
+        ) from e
 
     # Create session
     session = await auth_service.create_session(
@@ -218,7 +218,7 @@ async def signin(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail={"code": e.code, "message": e.message},
-        )
+        ) from e
 
     # Create session
     session = await auth_service.create_session(
@@ -286,7 +286,7 @@ async def forgot_password(
 
     if user:
         # Create reset token
-        token = await auth_service.create_password_reset_token(db, user)
+        await auth_service.create_password_reset_token(db, user)
         # TODO: Send email with reset link
         # In production, this would send an email
         # For now, we just return success (don't reveal if email exists)
@@ -316,12 +316,12 @@ async def reset_password(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"code": e.code, "message": e.message},
-        )
+        ) from e
     except auth_service.WeakPasswordError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"code": e.code, "message": e.message},
-        )
+        ) from e
 
     return {"message": "Password reset successfully"}
 

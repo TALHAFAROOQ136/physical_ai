@@ -1,16 +1,15 @@
 """Progress tracking service for chapter completion and reading activity."""
 
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from sqlalchemy import func, select, and_
+from sqlalchemy import and_, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 
-from src.models.progress import Progress, ProgressStatus
 from src.models.chapter import Chapter
 from src.models.module import Module
+from src.models.progress import Progress, ProgressStatus
 from src.models.user import User
 
 
@@ -281,9 +280,7 @@ async def get_dashboard_data(
         Dashboard dict with overall and module progress
     """
     # Get all modules
-    result = await db.execute(
-        select(Module).order_by(Module.order_sequence)
-    )
+    result = await db.execute(select(Module).order_by(Module.order_sequence))
     modules = list(result.scalars().all())
 
     # Get all chapters
@@ -321,19 +318,22 @@ async def get_dashboard_data(
     for module in modules:
         module_chapters = [c for c in all_chapters if c.module_id == module.id]
         module_completed = sum(
-            1 for c in module_chapters
+            1
+            for c in module_chapters
             if progress_map.get(c.id) and progress_map[c.id].status == ProgressStatus.COMPLETED
         )
         module_total = len(module_chapters)
         module_percent = (module_completed / module_total * 100) if module_total > 0 else 0
 
-        module_progress.append({
-            "module_id": module.id,
-            "module_title": module.title,
-            "completed": module_completed,
-            "total": module_total,
-            "percent_complete": round(module_percent, 1),
-        })
+        module_progress.append(
+            {
+                "module_id": module.id,
+                "module_title": module.title,
+                "completed": module_completed,
+                "total": module_total,
+                "percent_complete": round(module_percent, 1),
+            }
+        )
 
     # Get recent activity (last 10 updates)
     recent_query = (
@@ -356,12 +356,14 @@ async def get_dashboard_data(
             if progress.reading_time_seconds < 60:
                 action = "started"
 
-            recent_activity.append({
-                "chapter_id": chapter.id,
-                "chapter_title": chapter.title,
-                "action": action,
-                "timestamp": progress.updated_at.isoformat(),
-            })
+            recent_activity.append(
+                {
+                    "chapter_id": chapter.id,
+                    "chapter_title": chapter.title,
+                    "action": action,
+                    "timestamp": progress.updated_at.isoformat(),
+                }
+            )
 
     # Calculate streak (days with activity)
     streak = await _calculate_streak(db, user_id)
@@ -383,14 +385,14 @@ async def get_dashboard_data(
 
 async def _calculate_streak(db: AsyncSession, user_id: uuid.UUID) -> int:
     """Calculate current streak (consecutive days with activity)."""
-    today = datetime.now(timezone.utc).date()
+    today = datetime.now(UTC).date()
     streak = 0
     check_date = today
 
     while True:
         # Check if there's any progress update on this date
-        start_of_day = datetime.combine(check_date, datetime.min.time()).replace(tzinfo=timezone.utc)
-        end_of_day = datetime.combine(check_date, datetime.max.time()).replace(tzinfo=timezone.utc)
+        start_of_day = datetime.combine(check_date, datetime.min.time()).replace(tzinfo=UTC)
+        end_of_day = datetime.combine(check_date, datetime.max.time()).replace(tzinfo=UTC)
 
         result = await db.execute(
             select(func.count(Progress.id))
@@ -441,9 +443,7 @@ async def get_recommendations(
 
     # Get all chapters ordered by module and sequence
     result = await db.execute(
-        select(Chapter)
-        .join(Module)
-        .order_by(Module.order_sequence, Chapter.order_sequence)
+        select(Chapter).join(Module).order_by(Module.order_sequence, Chapter.order_sequence)
     )
     all_chapters = list(result.scalars().all())
 
@@ -456,9 +456,7 @@ async def get_recommendations(
     for chapter in all_chapters:
         progress = progress_map.get(chapter.id)
         if not progress or progress.status != ProgressStatus.COMPLETED:
-            result = await db.execute(
-                select(Module).where(Module.id == chapter.module_id)
-            )
+            result = await db.execute(select(Module).where(Module.id == chapter.module_id))
             module = result.scalar_one_or_none()
             next_chapter = {
                 "chapter_id": chapter.id,
@@ -475,21 +473,25 @@ async def get_recommendations(
         for chapter in all_chapters:
             if "intro" in chapter.id.lower() or "basics" in chapter.id.lower():
                 if chapter.difficulty == "beginner":
-                    skip_suggestions.append({
-                        "chapter_id": chapter.id,
-                        "title": chapter.title,
-                        "reason": "Your advanced Python skills likely cover this content",
-                    })
+                    skip_suggestions.append(
+                        {
+                            "chapter_id": chapter.id,
+                            "title": chapter.title,
+                            "reason": "Your advanced Python skills likely cover this content",
+                        }
+                    )
 
     if ros_experience == "experienced":
         # Suggest skipping basic ROS chapters
         for chapter in all_chapters:
             if "ros2" in chapter.id.lower() and chapter.difficulty == "beginner":
-                skip_suggestions.append({
-                    "chapter_id": chapter.id,
-                    "title": chapter.title,
-                    "reason": "Your ROS experience likely covers this content",
-                })
+                skip_suggestions.append(
+                    {
+                        "chapter_id": chapter.id,
+                        "title": chapter.title,
+                        "reason": "Your ROS experience likely covers this content",
+                    }
+                )
 
     # Generate focus areas based on goals
     focus_areas = []
@@ -509,20 +511,24 @@ async def get_recommendations(
         if module_id and module_id in modules:
             module = modules[module_id]
             priority = "high" if goal in learning_goals[:2] else "medium"
-            focus_areas.append({
-                "module_id": module.id,
-                "module_title": module.title,
-                "priority": priority,
-            })
+            focus_areas.append(
+                {
+                    "module_id": module.id,
+                    "module_title": module.title,
+                    "priority": priority,
+                }
+            )
 
     # Add modules not in goals as low priority
     for module_id, module in modules.items():
         if module_id not in [fa["module_id"] for fa in focus_areas]:
-            focus_areas.append({
-                "module_id": module.id,
-                "module_title": module.title,
-                "priority": "low",
-            })
+            focus_areas.append(
+                {
+                    "module_id": module.id,
+                    "module_title": module.title,
+                    "priority": "low",
+                }
+            )
 
     return {
         "next_chapter": next_chapter,

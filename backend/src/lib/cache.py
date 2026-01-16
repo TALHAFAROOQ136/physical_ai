@@ -5,9 +5,10 @@ caching static data like module lists, chapter metadata, etc.
 """
 
 import asyncio
+from collections.abc import Callable
 from datetime import datetime, timedelta
 from functools import wraps
-from typing import Any, Callable, TypeVar
+from typing import Any, TypeVar
 
 T = TypeVar("T")
 
@@ -80,9 +81,7 @@ class InMemoryCache:
             Number of entries removed
         """
         async with self._lock:
-            expired_keys = [
-                key for key, entry in self._cache.items() if entry.is_expired()
-            ]
+            expired_keys = [key for key, entry in self._cache.items() if entry.is_expired()]
             for key in expired_keys:
                 del self._cache[key]
             return len(expired_keys)

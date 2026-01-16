@@ -4,12 +4,12 @@ from datetime import datetime
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.api.auth import ErrorResponse, get_current_user
 from src.lib.database import get_db
 from src.services import auth_service
-from src.api.auth import get_current_user, ErrorResponse
 
 router = APIRouter()
 
@@ -262,9 +262,7 @@ async def update_user_preferences(
 
     # Update language preference if provided
     if body.language_preference:
-        user = await auth_service.update_user(
-            db, user, language_pref=body.language_preference
-        )
+        user = await auth_service.update_user(db, user, language_pref=body.language_preference)
 
     # Note: email_notifications and dark_mode would be stored elsewhere
     # For now, we return what was passed

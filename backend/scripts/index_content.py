@@ -14,15 +14,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.lib.config import get_settings
 from src.lib.qdrant import (
-    get_qdrant_client,
-    TEXTBOOK_COLLECTION,
-    upsert_chunks,
     delete_by_chapter,
+    upsert_chunks,
 )
 from src.services.embedding_service import (
-    get_embeddings_batch,
     chunk_text,
     generate_chunk_id,
+    get_embeddings_batch,
 )
 
 settings = get_settings()
@@ -37,14 +35,23 @@ CHAPTER_MAPPING = {
     "intro/setup.md": {"module_id": "intro", "chapter_id": "intro-setup"},
     "module-1-ros2/index.md": {"module_id": "ros2", "chapter_id": "ros2-index"},
     "module-1-ros2/nodes-and-topics.md": {"module_id": "ros2", "chapter_id": "ros2-nodes-topics"},
-    "module-1-ros2/services-and-actions.md": {"module_id": "ros2", "chapter_id": "ros2-services-actions"},
+    "module-1-ros2/services-and-actions.md": {
+        "module_id": "ros2",
+        "chapter_id": "ros2-services-actions",
+    },
     "module-1-ros2/urdf-basics.md": {"module_id": "ros2", "chapter_id": "ros2-urdf"},
     "module-2-simulation/index.md": {"module_id": "simulation", "chapter_id": "sim-index"},
     "module-2-simulation/gazebo-basics.md": {"module_id": "simulation", "chapter_id": "sim-gazebo"},
-    "module-2-simulation/unity-integration.md": {"module_id": "simulation", "chapter_id": "sim-unity"},
+    "module-2-simulation/unity-integration.md": {
+        "module_id": "simulation",
+        "chapter_id": "sim-unity",
+    },
     "module-3-isaac/index.md": {"module_id": "isaac", "chapter_id": "isaac-index"},
     "module-3-isaac/isaac-sim-setup.md": {"module_id": "isaac", "chapter_id": "isaac-setup"},
-    "module-3-isaac/perception-pipelines.md": {"module_id": "isaac", "chapter_id": "isaac-perception"},
+    "module-3-isaac/perception-pipelines.md": {
+        "module_id": "isaac",
+        "chapter_id": "isaac-perception",
+    },
     "module-4-vla/index.md": {"module_id": "vla", "chapter_id": "vla-index"},
     "module-4-vla/voice-interfaces.md": {"module_id": "vla", "chapter_id": "vla-voice"},
     "module-4-vla/llm-planning.md": {"module_id": "vla", "chapter_id": "vla-llm"},
@@ -66,6 +73,7 @@ def extract_frontmatter(content: str) -> tuple[dict, str]:
         parts = content.split("---", 2)
         if len(parts) >= 3:
             import yaml
+
             try:
                 frontmatter = yaml.safe_load(parts[1]) or {}
             except Exception:
@@ -149,21 +157,23 @@ async def index_chapter(
 
     # Prepare points for Qdrant
     points = []
-    for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
+    for i, (chunk, embedding) in enumerate(zip(chunks, embeddings, strict=False)):
         point_id = generate_chunk_id(chapter_id, i)
-        points.append({
-            "id": point_id,
-            "vector": embedding,
-            "payload": {
-                "module_id": metadata["module_id"],
-                "chapter_id": chapter_id,
-                "title": title,
-                "slug": file_path.stem,
-                "text": chunk["text"],
-                "chunk_index": i,
-                "difficulty": frontmatter.get("difficulty", "beginner"),
-            },
-        })
+        points.append(
+            {
+                "id": point_id,
+                "vector": embedding,
+                "payload": {
+                    "module_id": metadata["module_id"],
+                    "chapter_id": chapter_id,
+                    "title": title,
+                    "slug": file_path.stem,
+                    "text": chunk["text"],
+                    "chunk_index": i,
+                    "difficulty": frontmatter.get("difficulty", "beginner"),
+                },
+            }
+        )
 
     # Upsert to Qdrant
     await upsert_chunks(points)
@@ -211,7 +221,7 @@ async def main(dry_run: bool = False, chapter_filter: str | None = None):
 
     print()
     print("=" * 60)
-    print(f"Indexing complete!")
+    print("Indexing complete!")
     print(f"  Files processed: {total_files}")
     print(f"  Total chunks: {total_chunks}")
     if dry_run:

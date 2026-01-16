@@ -2,7 +2,7 @@
 
 import time
 from collections import defaultdict
-from typing import Callable
+from collections.abc import Callable
 
 from fastapi import HTTPException, Request, status
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -33,9 +33,7 @@ class RateLimiter:
     def _cleanup_old_requests(self, client_id: str, current_time: float) -> None:
         """Remove requests outside the current window."""
         cutoff = current_time - self.window_size
-        self._requests[client_id] = [
-            ts for ts in self._requests[client_id] if ts > cutoff
-        ]
+        self._requests[client_id] = [ts for ts in self._requests[client_id] if ts > cutoff]
 
     def is_rate_limited(self, request: Request) -> tuple[bool, int]:
         """

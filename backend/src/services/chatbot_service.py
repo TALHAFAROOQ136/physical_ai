@@ -1,10 +1,9 @@
 """Chatbot service with RAG (Retrieval-Augmented Generation)."""
 
 import uuid
-from typing import AsyncGenerator, Any
-from datetime import datetime
+from collections.abc import AsyncGenerator
+from typing import Any
 
-from openai import AsyncOpenAI
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -143,9 +142,16 @@ def is_capstone_related(query: str, chapter_context: str | None = None) -> bool:
         True if the query is capstone-related
     """
     capstone_keywords = [
-        "capstone", "milestone", "final project", "humanoid project",
-        "project design", "system architecture", "deliverable",
-        "presentation", "demo video", "grading",
+        "capstone",
+        "milestone",
+        "final project",
+        "humanoid project",
+        "project design",
+        "system architecture",
+        "deliverable",
+        "presentation",
+        "demo video",
+        "grading",
     ]
 
     query_lower = query.lower()
@@ -172,11 +178,12 @@ def detect_language(text: str) -> str:
         Detected language code ('en' or 'ur')
     """
     # Urdu Unicode range: 0600-06FF (Arabic script used for Urdu)
-    urdu_chars = sum(1 for char in text if '\u0600' <= char <= '\u06FF')
+    urdu_chars = sum(1 for char in text if "\u0600" <= char <= "\u06ff")
     # If more than 10% of characters are Urdu, consider it Urdu
     if len(text) > 0 and urdu_chars / len(text) > 0.1:
         return LANGUAGE_URDU
     return LANGUAGE_ENGLISH
+
 
 MAX_CONTEXT_MESSAGES = 10
 MAX_RETRIEVED_CHUNKS = 5
@@ -216,9 +223,7 @@ async def get_conversation(
     conversation_id: uuid.UUID,
 ) -> Conversation | None:
     """Get a conversation by ID."""
-    result = await session.execute(
-        select(Conversation).where(Conversation.id == conversation_id)
-    )
+    result = await session.execute(select(Conversation).where(Conversation.id == conversation_id))
     return result.scalar_one_or_none()
 
 
@@ -311,12 +316,14 @@ async def retrieve_context(
     for result in results:
         if result.score < 0.5:  # Filter low-relevance results
             continue
-        context_chunks.append({
-            "chapter_id": result.payload.get("chapter_id"),
-            "title": result.payload.get("title"),
-            "text": result.payload.get("text"),
-            "score": result.score,
-        })
+        context_chunks.append(
+            {
+                "chapter_id": result.payload.get("chapter_id"),
+                "title": result.payload.get("title"),
+                "text": result.payload.get("text"),
+                "score": result.score,
+            }
+        )
 
     return context_chunks
 
@@ -329,8 +336,7 @@ def format_context_for_prompt(chunks: list[dict[str, Any]]) -> str:
     context_parts = ["Here is relevant context from the textbook:\n"]
     for i, chunk in enumerate(chunks, 1):
         context_parts.append(
-            f"[Source {i}: {chunk['title']} ({chunk['chapter_id']})]\n"
-            f"{chunk['text']}\n"
+            f"[Source {i}: {chunk['title']} ({chunk['chapter_id']})]\n{chunk['text']}\n"
         )
 
     return "\n".join(context_parts)
@@ -389,17 +395,21 @@ async def generate_response(
     # Add retrieved context if available
     context_text = format_context_for_prompt(context_chunks)
     if context_text:
-        messages.append({
-            "role": "system",
-            "content": context_text,
-        })
+        messages.append(
+            {
+                "role": "system",
+                "content": context_text,
+            }
+        )
 
     # Add conversation history
     for msg in conversation_history[-MAX_CONTEXT_MESSAGES:]:
-        messages.append({
-            "role": msg.role,
-            "content": msg.content,
-        })
+        messages.append(
+            {
+                "role": msg.role,
+                "content": msg.content,
+            }
+        )
 
     # Add current query
     messages.append({"role": "user", "content": query})
@@ -487,17 +497,21 @@ async def generate_response_stream(
     # Add retrieved context if available
     context_text = format_context_for_prompt(context_chunks)
     if context_text:
-        messages.append({
-            "role": "system",
-            "content": context_text,
-        })
+        messages.append(
+            {
+                "role": "system",
+                "content": context_text,
+            }
+        )
 
     # Add conversation history
     for msg in conversation_history[-MAX_CONTEXT_MESSAGES:]:
-        messages.append({
-            "role": msg.role,
-            "content": msg.content,
-        })
+        messages.append(
+            {
+                "role": msg.role,
+                "content": msg.content,
+            }
+        )
 
     # Add current query
     messages.append({"role": "user", "content": query})
@@ -673,9 +687,9 @@ async def explain_text(
 
     # Build user prompt based on language
     if response_language == LANGUAGE_URDU:
-        user_prompt = f"براہ کرم نصابی کتاب سے اس متن کی آسان الفاظ میں وضاحت کریں:\n\n\"{selected_text}\"\n\nایک واضح، مختصر وضاحت فراہم کریں جو طالب علم کو اس تصور کو سمجھنے میں مدد کرے۔ تکنیکی اصطلاحات انگریزی میں رکھیں۔"
+        user_prompt = f'براہ کرم نصابی کتاب سے اس متن کی آسان الفاظ میں وضاحت کریں:\n\n"{selected_text}"\n\nایک واضح، مختصر وضاحت فراہم کریں جو طالب علم کو اس تصور کو سمجھنے میں مدد کرے۔ تکنیکی اصطلاحات انگریزی میں رکھیں۔'
     else:
-        user_prompt = f"Please explain this text from the textbook in simple terms:\n\n\"{selected_text}\"\n\nProvide a clear, concise explanation that helps a student understand this concept."
+        user_prompt = f'Please explain this text from the textbook in simple terms:\n\n"{selected_text}"\n\nProvide a clear, concise explanation that helps a student understand this concept.'
 
     messages = [
         {"role": "system", "content": system_prompt},

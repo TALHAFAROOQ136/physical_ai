@@ -3,7 +3,6 @@
 Run with: python -m scripts.init_qdrant
 """
 
-import asyncio
 import sys
 from pathlib import Path
 
@@ -14,16 +13,16 @@ from qdrant_client.http import models as qdrant_models
 
 from src.lib.config import get_settings
 from src.lib.qdrant import (
-    get_qdrant_client,
     TEXTBOOK_COLLECTION,
     VECTOR_SIZE,
+    get_qdrant_client,
 )
 
 
 def create_collection() -> None:
     """Create the textbook_chunks collection with optimal settings."""
     client = get_qdrant_client()
-    settings = get_settings()
+    get_settings()
 
     # Check if collection exists
     collections = client.get_collections().collections
@@ -91,8 +90,8 @@ def create_collection() -> None:
     print()
     print("Collection configuration:")
     print(f"  Vector size: {VECTOR_SIZE}")
-    print(f"  Distance metric: COSINE")
-    print(f"  Indexed fields: module_id, chapter_id, difficulty")
+    print("  Distance metric: COSINE")
+    print("  Indexed fields: module_id, chapter_id, difficulty")
     print()
     print("Expected payload schema for each point:")
     print("  {")
