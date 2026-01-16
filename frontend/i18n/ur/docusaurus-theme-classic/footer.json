@@ -40,7 +40,7 @@
     "description": "Footer link GitHub"
   },
   "copyright": {
-    "message": "کاپی رائٹ © {year} فزیکل اے آئی ٹیکسٹ بک۔ Docusaurus کے ساتھ بنایا گیا۔",
+    "message": "کاپی رائٹ © {year} فزیکل اے آئی ٹیکسٹ بک۔ کراری",
     "description": "Footer copyright"
   }
 }

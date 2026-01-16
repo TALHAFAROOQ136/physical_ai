@@ -1,6 +1,6 @@
 # Physical AI & Humanoid Robotics Textbook Platform
 
-An AI-native educational platform for learning Physical AI and Humanoid Robotics. Built with Docusaurus, FastAPI, and a RAG-powered chatbot.
+An AI-native educational platform for learning Physical AI and Humanoid Robotics. Karari
 
 ## Features
 
