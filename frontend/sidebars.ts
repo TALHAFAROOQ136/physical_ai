@@ -27,6 +27,9 @@ const sidebars: SidebarsConfig = {
         'module-1-ros2/nodes-and-topics',
         'module-1-ros2/services-and-actions',
         'module-1-ros2/urdf-basics',
+        'module-1-ros2/parameters-and-components',
+        'module-1-ros2/advanced-communication',
+        'module-1-ros2/realtime-considerations',
       ],
     },
     {
