@@ -65,6 +65,9 @@ This module is organized into the following chapters:
 1. **[Nodes and Topics](/docs/module-1-ros2/nodes-and-topics)** - Create your first ROS 2 nodes
 2. **[Services and Actions](/docs/module-1-ros2/services-and-actions)** - Build interactive robot behaviors
 3. **[URDF Basics](/docs/module-1-ros2/urdf-basics)** - Define robot structure and kinematics
+4. **[Parameters and Components](/docs/module-1-ros2/parameters-and-components)** - Manage configurations and composable nodes
+5. **[Advanced Communication Patterns](/docs/module-1-ros2/advanced-communication)** - Custom message types and advanced patterns
+6. **[Real-Time Considerations](/docs/module-1-ros2/realtime-considerations)** - Time-critical robotic applications
 
 ## Hands-On Project
 
