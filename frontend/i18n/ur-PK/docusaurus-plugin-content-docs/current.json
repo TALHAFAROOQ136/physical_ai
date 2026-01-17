@@ -1,0 +1,78 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Introduction": {
+    "message": "Introduction",
+    "description": "The label for category Introduction in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Introduction.link.generated-index.title": {
+    "message": "Getting Started",
+    "description": "The generated-index page title for category Introduction in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Introduction.link.generated-index.description": {
+    "message": "Welcome to Physical AI & Humanoid Robotics",
+    "description": "The generated-index page description for category Introduction in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 1: ROS 2": {
+    "message": "Module 1: ROS 2",
+    "description": "The label for category Module 1: ROS 2 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 1: ROS 2.link.generated-index.title": {
+    "message": "The Robotic Nervous System",
+    "description": "The generated-index page title for category Module 1: ROS 2 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 1: ROS 2.link.generated-index.description": {
+    "message": "Learn ROS 2 middleware architecture for robot control",
+    "description": "The generated-index page description for category Module 1: ROS 2 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 2: Simulation": {
+    "message": "Module 2: Simulation",
+    "description": "The label for category Module 2: Simulation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 2: Simulation.link.generated-index.title": {
+    "message": "The Digital Twin",
+    "description": "The generated-index page title for category Module 2: Simulation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 2: Simulation.link.generated-index.description": {
+    "message": "Build physics simulations with Gazebo and Unity",
+    "description": "The generated-index page description for category Module 2: Simulation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 3: NVIDIA Isaac": {
+    "message": "Module 3: NVIDIA Isaac",
+    "description": "The label for category Module 3: NVIDIA Isaac in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 3: NVIDIA Isaac.link.generated-index.title": {
+    "message": "The AI-Robot Brain",
+    "description": "The generated-index page title for category Module 3: NVIDIA Isaac in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 3: NVIDIA Isaac.link.generated-index.description": {
+    "message": "Leverage NVIDIA Isaac for photorealistic simulation",
+    "description": "The generated-index page description for category Module 3: NVIDIA Isaac in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 4: VLA": {
+    "message": "Module 4: VLA",
+    "description": "The label for category Module 4: VLA in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 4: VLA.link.generated-index.title": {
+    "message": "Vision-Language-Action",
+    "description": "The generated-index page title for category Module 4: VLA in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Module 4: VLA.link.generated-index.description": {
+    "message": "Integrate voice commands and LLMs for robot control",
+    "description": "The generated-index page description for category Module 4: VLA in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Capstone Project": {
+    "message": "Capstone Project",
+    "description": "The label for category Capstone Project in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Capstone Project.link.generated-index.title": {
+    "message": "Build Your Humanoid",
+    "description": "The generated-index page title for category Capstone Project in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Capstone Project.link.generated-index.description": {
+    "message": "Complete capstone project integrating all skills",
+    "description": "The generated-index page description for category Capstone Project in sidebar tutorialSidebar"
+  }
+}

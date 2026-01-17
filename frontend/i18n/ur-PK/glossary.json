@@ -1,0 +1,44 @@
+{
+  "glossary": {
+    "ROS": {
+      "term": "Robot Operating System",
+      "definition": "An open-source robotics middleware suite that provides services like hardware abstraction, device drivers, libraries, visualizers, message-passing, package management, and more."
+    },
+    "URDF": {
+      "term": "Unified Robot Description Format",
+      "definition": "An XML format for representing a robot model, including its links, joints, and other properties."
+    },
+    "Gazebo": {
+      "term": "Gazebo",
+      "definition": "A 3D robot simulator that provides realistic physics simulation, high-quality graphics, and convenient programmatic interfaces."
+    },
+    "Isaac Sim": {
+      "term": "Isaac Sim",
+      "definition": "NVIDIA's robotics simulation application and synthetic data generation tool built on NVIDIA Omniverse."
+    },
+    "VLA": {
+      "term": "Vision-Language-Action",
+      "definition": "A model architecture that combines visual perception, language understanding, and action prediction for robotic manipulation tasks."
+    },
+    "RAG": {
+      "term": "Retrieval-Augmented Generation",
+      "definition": "A technique that enhances language models by retrieving relevant documents from a knowledge base to inform responses."
+    },
+    "Humanoid": {
+      "term": "Humanoid",
+      "definition": "A robot with human-like characteristics, especially similar in appearance to humans."
+    },
+    "Simulation": {
+      "term": "Simulation",
+      "definition": "The imitation of the operation of a real-world process or system over time in a controlled environment."
+    },
+    "Node": {
+      "term": "Node",
+      "definition": "A process that performs computation in ROS, communicating with other nodes to perform tasks."
+    },
+    "Topic": {
+      "term": "Topic",
+      "definition": "A named bus over which nodes exchange messages in a publish-subscribe communication pattern."
+    }
+  }
+}

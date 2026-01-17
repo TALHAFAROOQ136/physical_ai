@@ -1,0 +1,46 @@
+{
+  "link.title.Course": {
+    "message": "Course",
+    "description": "The title of the footer links column with title=Course in the footer"
+  },
+  "link.title.Advanced": {
+    "message": "Advanced",
+    "description": "The title of the footer links column with title=Advanced in the footer"
+  },
+  "link.title.Community": {
+    "message": "Community",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.item.label.Introduction": {
+    "message": "Introduction",
+    "description": "The label of footer link with label=Introduction linking to /docs/intro"
+  },
+  "link.item.label.Module 1: ROS 2": {
+    "message": "Module 1: ROS 2",
+    "description": "The label of footer link with label=Module 1: ROS 2 linking to /docs/module-1-ros2"
+  },
+  "link.item.label.Module 2: Simulation": {
+    "message": "Module 2: Simulation",
+    "description": "The label of footer link with label=Module 2: Simulation linking to /docs/module-2-simulation"
+  },
+  "link.item.label.Module 3: NVIDIA Isaac": {
+    "message": "Module 3: NVIDIA Isaac",
+    "description": "The label of footer link with label=Module 3: NVIDIA Isaac linking to /docs/module-3-isaac"
+  },
+  "link.item.label.Module 4: VLA": {
+    "message": "Module 4: VLA",
+    "description": "The label of footer link with label=Module 4: VLA linking to /docs/module-4-vla"
+  },
+  "link.item.label.Capstone Project": {
+    "message": "Capstone Project",
+    "description": "The label of footer link with label=Capstone Project linking to /docs/capstone"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/TALHAFAROOQ136/physical_ai"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 Physical AI Textbook. Karari",
+    "description": "The footer copyright"
+  }
+}

@@ -56,7 +56,7 @@ const config: Config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ur'],
+    locales: ['en', 'ur', 'ur-PK'], // Added Roman Urdu locale using Pakistan Urdu locale
     localeConfigs: {
       en: {
         label: 'English',
@@ -65,6 +65,10 @@ const config: Config = {
       ur: {
         label: 'اردو',
         direction: 'rtl',
+      },
+      'ur-PK': {
+        label: 'Roman Urdu',
+        direction: 'ltr',
       },
     },
   },

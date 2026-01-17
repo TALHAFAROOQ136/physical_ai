@@ -231,3 +231,49 @@ html {
   background-color: var(--ifm-color-primary-darkest);
   color: var(--ifm-color-primary-lightest);
 }
+
+/* Roman Urdu Toggle Component Styles */
+.roman-urdu-container {
+  display: inline-block;
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+.urdu-display {
+  margin-bottom: 0.5rem;
+}
+
+.arabic-urdu-text {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  font-size: 1.1em;
+}
+
+.roman-urdu-text {
+  direction: ltr;
+  text-align: left;
+  font-family: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1em;
+  font-style: italic;
+}
+
+.roman-urdu-toggle-btn {
+  background-color: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.roman-urdu-toggle-btn:hover {
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+.roman-urdu-toggle-btn:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
