@@ -239,6 +239,11 @@ html {
   margin: 0.5rem 0;
 }
 
+/* Trigger rebuild */
+.rebuild-trigger {
+  display: none;
+}
+
 .urdu-display {
   margin-bottom: 0.5rem;
 }
